@@ -20,7 +20,7 @@ resource azurerm_network_interface nic {
     public_ip_address_id          = azurerm_public_ip.pip.id
   }
 
-  tags = { source = "terraform" }
+  tags = merge(var.tags, { source = "terraform", type = "vm" } )
 }
 
 resource azurerm_public_ip pip {
@@ -31,7 +31,7 @@ resource azurerm_public_ip pip {
   allocation_method            = "Static"
   domain_name_label            = lower( var.dns_name )
 
-  tags = { source = "terraform" }
+  tags = merge(var.tags, { source = "terraform", type = "vm" } )
 }
 
 resource azurerm_linux_virtual_machine vm {
@@ -64,6 +64,6 @@ resource azurerm_linux_virtual_machine vm {
      public_key = file( join( "", [ pathexpand(var.admin_priv_key), ".pub" ] ) )
   }
 
-  tags = { source = "terraform" }
+  tags = merge(var.tags, { source = "terraform", type = "vm" } )
 }
 
