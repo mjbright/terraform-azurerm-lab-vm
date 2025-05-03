@@ -72,7 +72,7 @@ variable image_version {
 }
 
 variable tags {
-  type        = "string"
+  type        = "map(string)"
   description = "Tags to apply to resources"
   default     = {}
 }
