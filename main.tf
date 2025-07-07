@@ -34,6 +34,18 @@ resource azurerm_public_ip pip {
   tags = merge(var.tags, { source = "terraform", type = "vm" } )
 }
 
+#
+# Create disk_suffix resource to workaround annoying "Azure bug?" where disks are not deleted ...
+#
+# We then use random_string.disk_suffix.result in the naming of
+# the osdisk sub-block of the azurerm_linux_virtual_machine.vm
+#
+resource "random_string" "disk_suffix" {
+  length  = 6
+  special = false
+  upper   = false
+}
+
 resource azurerm_linux_virtual_machine vm {
   name                  = "${var.prefix}-vm"
   location              = var.location
@@ -50,7 +62,8 @@ resource azurerm_linux_virtual_machine vm {
   }
 
   os_disk {
-   name                  = "${var.hostname}-osdisk"
+    #name                 = "${var.hostname}-osdisk"
+    name                 = "${var.hostname}-osdisk-${ random_string.disk_suffix.result }"
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
   }
