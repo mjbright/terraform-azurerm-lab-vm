@@ -58,17 +58,17 @@ variable image_publisher {
 variable image_offer {
   type        = string
   description = "the name of the offer"
-  default     = "0001-com-ubuntu-confidential-vm-focal"
+  nullable    = false
 }
 variable image_sku {
   type        = string
   description = "image sku to apply"
-  default     = "20_04-lts-cvm"
+  nullable    = false
 }
 variable image_version {
   type        = string
   description = "version of the image"
-  default     = "20.04.202306140"
+  nullable    = false
 }
 
 variable tags {
